@@ -1,0 +1,7 @@
+- hosts: web-servers
+  sudo: true
+  vars_files:
+      - vars/{{ stage }}.yml
+  roles:
+    - nodebrew
+    - node

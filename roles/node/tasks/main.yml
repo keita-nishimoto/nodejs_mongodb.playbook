@@ -1,0 +1,17 @@
+- name: Check Node Is Installed.
+  sudo: no
+  shell: bash -lc "nodebrew ls | grep {{ node_version }}"
+  register: node_is_installed
+  changed_when: no
+  ignore_errors: yes
+
+- name: Install Node.
+  sudo: no
+  shell: bash -lc "nodebrew install-binary {{ node_version }} --v8-options=--harmony"
+  when: node_is_installed|failed
+  ignore_errors: yes
+
+- name: Switch a version to use.
+  sudo: no
+  shell: bash -lc "nodebrew use {{ node_version }}"
+  when: node_is_installed|failed
